@@ -1,4 +1,4 @@
-package lutzen_jacopo_zoltar;
+package lutzen_jacopo_gestione_zoltar;
 
 /**
  * Contiene tutti i controlli sui messaggi del protocollo Zoltar.

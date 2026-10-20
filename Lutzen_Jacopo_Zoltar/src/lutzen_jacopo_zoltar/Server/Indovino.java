@@ -1,6 +1,6 @@
 package lutzen_jacopo_zoltar.Server;
 
-import lutzen_jacopo_zoltar.ProtocolloZoltar;
+import lutzen_jacopo_gestione_zoltar.ProtocolloZoltar;
 
 /**
  * Produce le risposte predefinite di Zoltar.

@@ -1,4 +1,6 @@
-package lutzen_jacopo_zoltar;
+package lutzen_jacopo_gestione_zoltar;
+
+import lutzen_jacopo_gestione_zoltar.ControlliZoltar;
 
 /**
  * Regole del protocollo di comunicazione tra client e server.

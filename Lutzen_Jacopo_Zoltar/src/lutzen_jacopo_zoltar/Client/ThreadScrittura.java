@@ -5,7 +5,7 @@
 package lutzen_jacopo_zoltar.Client;
 
 import java.io.*;
-import lutzen_jacopo_zoltar.ControlliZoltar;
+import lutzen_jacopo_gestione_zoltar.ControlliZoltar;
 import java.net.*;
 /**
  *

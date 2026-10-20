@@ -2,7 +2,7 @@ package lutzen_jacopo_zoltar.Server;
 
 import java.net.*;
 import java.io.*;
-import lutzen_jacopo_zoltar.ControlliZoltar;
+import lutzen_jacopo_gestione_zoltar.ControlliZoltar;
 
 public class ThreadLettura implements Runnable {
 
