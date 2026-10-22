@@ -1,10 +1,16 @@
 package lutzen_jacopo_zoltar.Server;
 
+/**
+ * Contratto comune delle personalita di Zoltar.
+ *
+ * <p>L'interfaccia permette a {@link Indovino} di cambiare comportamento
+ * senza conoscere i dettagli delle risposte di Luck, Tarot o Zoltar.</p>
+ */
 public interface Personalita {
 
-    // Restituisce il nome usato nel protocollo per questa personalita.
+    /** @return nome usato nel comando e nella conferma {@code PERS_OK_} */
     String getNome();
 
-    // Genera una delle risposte predefinite della personalita.
+    /** @return una profezia predefinita della personalita */
     String generaRisposta();
 }

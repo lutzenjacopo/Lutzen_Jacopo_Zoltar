@@ -2,8 +2,16 @@ package lutzen_jacopo_zoltar.Server;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Personalita ispirata alle slot machine.
+ *
+ * <p>Le otto frasi includono sia previsioni fortunate sia avvertimenti su
+ * perdite e gioco impulsivo. Una risposta viene scelta casualmente per ogni
+ * domanda.</p>
+ */
 public class PersonalitaLuck implements Personalita {
 
+    // La risposta viene scelta casualmente tra otto profezie sulle slot.
     // Risposte a tema slot, positive o negative, scelte casualmente.
     private static final String[] RISPOSTE = {
         "Prevedo una combinazione fortunata sui rulli: una piccola vincita potrebbe sorprenderti.",
@@ -16,13 +24,13 @@ public class PersonalitaLuck implements Personalita {
         "Un colpo di fortuna arrivera quando meno te lo aspetti, ma non affidare le tue scelte solo al caso."
     };
 
-    // Nome della personalita restituito al client.
+    /** @return nome protocollo {@code Luck} */
     @Override
     public String getNome() {
         return "Luck";
     }
 
-    // Sceglie casualmente una previsione tra quelle disponibili.
+    /** @return una previsione casuale a tema slot */
     @Override
     public String generaRisposta() {
         return RISPOSTE[ThreadLocalRandom.current().nextInt(RISPOSTE.length)];

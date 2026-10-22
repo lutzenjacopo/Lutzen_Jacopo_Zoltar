@@ -9,26 +9,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Avvia il server TCP e accetta le connessioni dei client.
  *
- * @author lutzen.jacopo
+ * <p>Il server resta in ascolto sulla porta {@code 12345}. Per ogni socket
+ * accettato crea un {@link LettoreServer}, cosi piu client possono essere
+ * gestiti contemporaneamente da thread distinti.</p>
  */
-public class Zoltar_Server {
+public class ServerZoltar {
 
-    // Elenco dei flussi di output dei client attualmente collegati.
+    // Punto di avvio del server TCP.
+    /** Flussi di risposta dei client collegati, protetti dai metodi synchronized. */
     private static final List<PrintWriter> CLIENTI = new ArrayList<>();
 
-    // Aggiunge in modo sicuro un nuovo client all'elenco.
+    /**
+     * Registra il flusso di un nuovo client.
+     *
+     * @param out flusso verso il client appena collegato
+     */
     public static synchronized void aggiungiCliente(PrintWriter out) {
         CLIENTI.add(out);
     }
 
-    // Rimuove il client e chiude il relativo flusso di output.
+    /** Rimuove e chiude il flusso di un client disconnesso. */
     public static synchronized void rimuoviCliente(PrintWriter out) {
         CLIENTI.remove(out);
         out.close();
     }
 
-    // Invia un messaggio a tutti i client collegati.
+    /** Inoltra un messaggio amministrativo a tutti i client collegati. */
     public static synchronized void inviaATutti(String messaggio) {
         for (PrintWriter out : CLIENTI) {
             out.println(messaggio);
@@ -36,7 +44,9 @@ public class Zoltar_Server {
     }
 
     /**
-     * @param args the command line arguments
+     * Crea il socket di ascolto e avvia un lettore per ogni connessione.
+     *
+     * @param args argomenti da riga di comando, non utilizzati
      */
     public static void main(String[] args) {
         // Riferimenti al server TCP e alla connessione appena accettata.
@@ -57,7 +67,7 @@ public class Zoltar_Server {
 
                 // Ogni client viene gestito da un thread indipendente.
                 Thread threadLettura = new Thread(
-                        new ThreadLettura(connessione));
+                        new LettoreServer(connessione));
                 threadLettura.start();
             }
         } catch (IOException e) {

@@ -11,19 +11,27 @@ package lutzen_jacopo_zoltar.Client;
 import java.net.*;
 import java.io.*;
 
-public class ThreadLettura implements Runnable {
+/**
+ * Thread di ricezione del client da console.
+ *
+ * <p>Resta bloccato su {@code readLine()} finche il server invia righe.
+ * Non interpreta il protocollo: stampa i messaggi ricevuti e lascia al
+ * server il compito di validare e generare le risposte.</p>
+ */
+public class LettoreClient implements Runnable {
 
-    // Socket condiviso con il thread che invia i messaggi.
+    /** Socket dal quale arrivano le risposte. */
     private final Socket socket;
 
-    // Salva il socket ricevuto dal client principale.
-    public ThreadLettura(Socket socket) {
+    /** Costruisce il lettore associato al socket aperto dal main. */
+    public LettoreClient(Socket socket) {
         this.socket = socket;
     }
 
     @Override
     public void run() {
         try {
+            // Il thread resta in ascolto senza bloccare la scrittura dell'utente.
             // Trasforma i dati ricevuti dal socket in righe di testo.
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(socket.getInputStream()));

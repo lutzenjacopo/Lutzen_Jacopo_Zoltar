@@ -2,8 +2,15 @@ package lutzen_jacopo_zoltar.Server;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Personalita generica e predefinita del server.
+ *
+ * <p>Viene usata all'avvio di ogni connessione, prima che il client scelga
+ * eventualmente Luck o Tarot.</p>
+ */
 public class PersonalitaZoltar implements Personalita {
 
+    // Personalita generica attiva come comportamento predefinito.
     // Profezie generiche della personalita predefinita di Zoltar.
     private static final String[] RISPOSTE = {
         "Le stelle sono dalla tua parte.",
@@ -16,13 +23,13 @@ public class PersonalitaZoltar implements Personalita {
         "La risposta che cerchi e piu vicina di quanto immagini: osserva i piccoli segnali."
     };
 
-    // Nome della personalita restituito al client.
+    /** @return nome protocollo {@code Zoltar} */
     @Override
     public String getNome() {
         return "Zoltar";
     }
 
-    // Sceglie casualmente una profezia generica.
+    /** @return una profezia generica scelta casualmente */
     @Override
     public String generaRisposta() {
         return RISPOSTE[ThreadLocalRandom.current().nextInt(RISPOSTE.length)];

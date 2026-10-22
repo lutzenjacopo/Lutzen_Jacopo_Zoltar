@@ -3,15 +3,25 @@ package lutzen_jacopo_zoltar.Server;
 import lutzen_jacopo_gestione_zoltar.ProtocolloZoltar;
 
 /**
- * Produce le risposte predefinite di Zoltar.
+ * Coordina la personalita attiva e la risposta alle richieste del client.
+ *
+ * <p>All'avvio usa {@link PersonalitaZoltar}. Un comando {@code PERS_...}
+ * sostituisce l'oggetto corrente; una domanda {@code DOM_...} viene invece
+ * inoltrata alla personalita selezionata.</p>
  */
 public class Indovino {
 
-    // Ogni client parte sempre con la personalita generale Zoltar.
+    /** Strategia di risposta attiva per questa specifica connessione. */
     private Personalita personalita = new PersonalitaZoltar();
 
-    // Interpreta il comando ricevuto e restituisce la risposta corretta.
+    /**
+     * Interpreta un comando del protocollo.
+     *
+     * @param messaggio comando ricevuto dal client
+     * @return conferma, profezia o errore di protocollo
+     */
     public String rispondi(String messaggio) {
+        // Prima vengono controllati i comandi di cambio personalita.
         // Se arriva PERS_, cambia la personalita usata nelle risposte successive.
         if (ProtocolloZoltar.ePersonalita(messaggio)) {
             String nome = ProtocolloZoltar.nomePersonalita(messaggio);

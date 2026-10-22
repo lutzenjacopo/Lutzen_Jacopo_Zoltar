@@ -11,15 +11,22 @@ import java.net.*;
  *
  * @author lutzen.jacopo
  */
-public class ThreadScrittura implements Runnable{
+/**
+ * Thread di invio del client da console.
+ *
+ * <p>Non modifica il testo inserito: l'utente deve scrivere esplicitamente
+ * {@code DOM_}, {@code PERS_} oppure {@code fine}, come richiesto dal
+ * protocollo.</p>
+ */
+public class ScrittoreClient implements Runnable{
     
-    // Flusso usato per inviare i comandi al server.
+    /** Flusso testuale collegato al socket del server. */
     private PrintWriter out;
-    // Flusso che legge le scelte e le domande dalla tastiera.
+    /** Flusso di input della console. */
     private BufferedReader tastiera;
 
-    // Crea i flussi di uscita verso il server e di ingresso dalla tastiera.
-    public ThreadScrittura(Socket socket) {
+    /** Inizializza i flussi di rete e tastiera. */
+    public ScrittoreClient(Socket socket) {
         try {
             this.out = new PrintWriter(socket.getOutputStream(), true);
             this.tastiera = new BufferedReader(new InputStreamReader(System.in));
@@ -31,6 +38,7 @@ public class ThreadScrittura implements Runnable{
     @Override
     public void run() {
         try {
+            // Il thread legge comandi completi, quindi non aggiunge prefissi automaticamente.
             String messaggio;
 
             // Il client non sceglie automaticamente una personalita.

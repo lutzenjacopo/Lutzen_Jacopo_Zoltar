@@ -2,25 +2,33 @@ package lutzen_jacopo_zoltar.Server;
 
 import java.io.*;
 
-public class ThreadScrittura implements Runnable {
+/**
+ * Thread opzionale per messaggi amministrativi del server.
+ *
+ * <p>Legge la console del server e inoltra ogni riga a tutti i client
+ * registrati. Non gestisce le domande personali, che sono responsabilita
+ * di {@link LettoreServer}.</p>
+ */
+public class ScrittoreServer implements Runnable {
 
-    // Tastiera del server, usata per eventuali messaggi amministrativi.
+    /** Input della console amministrativa. */
     private final BufferedReader tastiera;
 
-    // Prepara il flusso di lettura dalla console.
-    public ThreadScrittura() {
+    /** Crea il lettore collegato a standard input. */
+    public ScrittoreServer() {
         this.tastiera = new BufferedReader(new InputStreamReader(System.in));
     }
 
     @Override
     public void run() {
         try {
+            // Questo thread permette al server di inviare comunicazioni globali.
             String messaggio;
 
             // Legge i messaggi della console finche l'input resta disponibile.
             while ((messaggio = tastiera.readLine()) != null) {
                 // Invia il messaggio a tutti i client collegati.
-                Zoltar_Server.inviaATutti("Server: " + messaggio);
+                ServerZoltar.inviaATutti("Server: " + messaggio);
 
             }
         } catch (IOException e) {

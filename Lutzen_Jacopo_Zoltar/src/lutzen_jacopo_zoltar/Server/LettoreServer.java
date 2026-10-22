@@ -4,21 +4,30 @@ import java.net.*;
 import java.io.*;
 import lutzen_jacopo_gestione_zoltar.ControlliZoltar;
 
-public class ThreadLettura implements Runnable {
+/**
+ * Gestisce il canale di ingresso di un singolo client.
+ *
+ * <p>Legge una riga alla volta, riconosce {@code fine} e delega gli altri
+ * messaggi a {@link Indovino}. La personalita contenuta nell'indovino e
+ * quindi privata della connessione e non viene condivisa con altri client.</p>
+ */
+public class LettoreServer implements Runnable {
 
-    // Connessione con uno specifico client.
+    /** Socket del client assegnato a questo thread. */
     private final Socket socket;
-    // Indovino dedicato al client, con una personalita indipendente dagli altri.
+    /** Interprete del protocollo e generatore delle risposte. */
     private final Indovino indovino = new Indovino();
 
-    // Salva il socket della connessione da gestire.
-    public ThreadLettura(Socket socket) {
+    /** Prepara il lettore per la connessione indicata. */
+    public LettoreServer(Socket socket) {
         this.socket = socket;
     }
 
     @Override
     public void run() {
         try {
+            // BufferedReader permette di ricevere messaggi terminati da newline.
+            // Ogni client possiede flussi e un indovino separati.
             // Crea i flussi per ricevere dal client e rispondere al client.
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(socket.getInputStream()));
@@ -26,7 +35,7 @@ public class ThreadLettura implements Runnable {
                     socket.getOutputStream(), true);
 
             // Registra il client tra quelli collegati al server.
-            Zoltar_Server.aggiungiCliente(out);
+            ServerZoltar.aggiungiCliente(out);
             String messaggio;
 
             // Elabora ogni riga ricevuta finche il client resta connesso.
@@ -39,11 +48,11 @@ public class ThreadLettura implements Runnable {
                     break;
                 }
 
-                // L'indovino interpreta PERS_ o DOM_ e produce la risposta.
+                // L'indovino cambia personalita o genera una profezia.
                 out.println(indovino.rispondi(messaggio));
             }
             System.out.println("Il client ha chiuso la connessione.");
-            Zoltar_Server.rimuoviCliente(out);
+            ServerZoltar.rimuoviCliente(out);
         } catch (IOException e) {
             // Mostra l'errore solo se il socket non era gia stato chiuso.
             if (!socket.isClosed()) {

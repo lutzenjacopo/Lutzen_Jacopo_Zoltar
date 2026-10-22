@@ -8,13 +8,16 @@ import java.io.IOException;
 import java.net.Socket;
 
 /**
+ * Punto di ingresso del client testuale.
  *
- * @author lutzen.jacopo
+ * <p>A differenza di {@link ClientGUI}, usa la console: un thread legge le
+ * risposte del server e un altro legge i comandi digitati dall'utente.</p>
  */
-public class Zoltar_Client {
+public class ClientConsole {
 
+    /** Avvia una sessione client sulla macchina locale. */
     /**
-     * @param args the command line arguments
+     * @param args argomenti da riga di comando, non utilizzati
      */
     public static void main(String[] args) {
         // Indirizzo e porta del server a cui collegarsi.
@@ -27,8 +30,8 @@ public class Zoltar_Client {
             System.out.println("Connesso al server " + host + ":" + porta);
 
             // Un thread riceve le risposte mentre l'altro legge la tastiera.
-            Thread threadLettura = new Thread(new ThreadLettura(socket));
-            Thread threadScrittura = new Thread(new ThreadScrittura(socket));
+            Thread threadLettura = new Thread(new LettoreClient(socket));
+            Thread threadScrittura = new Thread(new ScrittoreClient(socket));
 
             // Il thread di scrittura non impedisce la chiusura del programma.
             threadScrittura.setDaemon(true);

@@ -2,8 +2,15 @@ package lutzen_jacopo_zoltar.Server;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Personalita basata sugli Arcani maggiori dei tarocchi.
+ *
+ * <p>Ogni messaggio usa una carta come simbolo e la interpreta come
+ * annuncio di un possibile evento futuro dell'utente.</p>
+ */
 public class PersonalitaTarot implements Personalita {
 
+    // Ogni frase usa un arcano come simbolo di una previsione futura.
     // Profezie ispirate agli Arcani maggiori e rivolte al futuro dell'utente.
     private static final String[] RISPOSTE = {
         "Le carte mostrano il Matto: un nuovo inizio sta arrivando e dovrai avere il coraggio di seguirlo.",
@@ -16,13 +23,13 @@ public class PersonalitaTarot implements Personalita {
         "La Stella brilla sul tuo futuro: dopo un periodo difficile ritroverai speranza e raggiungerai un obiettivo."
     };
 
-    // Nome della personalita restituito al client.
+    /** @return nome protocollo {@code Tarot} */
     @Override
     public String getNome() {
         return "Tarot";
     }
 
-    // Sceglie casualmente una profezia dei tarocchi.
+    /** @return una previsione casuale ispirata ai tarocchi */
     @Override
     public String generaRisposta() {
         return RISPOSTE[ThreadLocalRandom.current().nextInt(RISPOSTE.length)];
