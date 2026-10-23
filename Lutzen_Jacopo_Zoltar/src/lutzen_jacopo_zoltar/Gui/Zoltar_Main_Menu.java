@@ -26,6 +26,7 @@ public class Zoltar_Main_Menu extends javax.swing.JFrame {
     public Zoltar_Main_Menu() {
         // Crea i componenti grafici generati da NetBeans.
         initComponents();
+        lbl_guida.setVisible(false);
         // Collega i componenti del form alla logica del menu.
         controller = new ControllerMenu(cmb_personalità, lbl_anteprima,
                 lbl_pulsante, lbl_inserisci1, lbl_inserisci2);
@@ -200,6 +201,7 @@ public class Zoltar_Main_Menu extends javax.swing.JFrame {
     private void lbl_monetaMouseClicked(java.awt.event.MouseEvent evt) {                                        
         // Mostra il selettore delle personalita dopo l'inserimento della moneta.
         controller.inserisciMoneta();
+        lbl_guida.setVisible(true);
     }
 
     private void cmb_personalitàActionPerformed(java.awt.event.ActionEvent evt) {                                                
