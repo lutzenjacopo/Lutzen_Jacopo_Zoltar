@@ -10,8 +10,8 @@ public enum PersonalitaGrafica {
 
     NESSUNO("Nessuno", "Nessuno"),
     ZOLTAR("Zoltar", "Zoltar", frames("Zoltar", "Z")),
-    // Hakari non ha ancora le immagini: senza frame compare "WORK IN PROGRESS".
-    LUCK("Hakari", "Luck"),
+        // Hakari ha 10 frame: Frame_1_L.png ... Frame_10_L.png nella cartella Hakari.
+    LUCK("Hakari", "Luck", frames("Hakari", "L", 10)),
     // Il primo frame e quello gia usato nel designer (percorso sicuro), gli altri
     // sono Frame_2_T.png ... Frame_6_T.png nella cartella Avdoul.
     TAROT("Avdoul", "Tarot", frames("Avdoul", "T", "/Img_Personalità/Avdoul/Frame_1_T_P.png"));
@@ -28,13 +28,16 @@ public enum PersonalitaGrafica {
         this.nomeProtocollo = nomeProtocollo;
         this.frames = frames;
     }
+    private static String[] frames(String cartella, String suffisso) {
+        return frames(cartella, suffisso, NUMERO_FRAME);
+    }
 
     /**
-     * Genera i percorsi standard dei sei frame di una personalita.
+     * Genera i percorsi standard di un numero qualsiasi di frame.
      */
-    private static String[] frames(String cartella, String suffisso) {
-        String[] percorsi = new String[NUMERO_FRAME];
-        for (int i = 0; i < NUMERO_FRAME; i++) {
+    private static String[] frames(String cartella, String suffisso, int numero) {
+        String[] percorsi = new String[numero];
+        for (int i = 0; i < numero; i++) {
             percorsi[i] = "/Img_Personalità/" + cartella
                     + "/Frame_" + (i + 1) + "_" + suffisso + ".png";
         }
