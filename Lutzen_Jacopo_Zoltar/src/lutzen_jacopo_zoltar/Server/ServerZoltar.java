@@ -21,6 +21,14 @@ public class ServerZoltar {
     /** Flussi di risposta dei client collegati, protetti dai metodi synchronized. */
     private static final List<PrintWriter> CLIENTI = new ArrayList<>();
 
+    /** Gestore unico delle risposte JSON, condiviso da tutti i client. */
+    private static final DataMenagerJson DATA_MENAGER = new DataMenagerJson();
+
+    /** @return gestore condiviso delle risposte */
+    public static DataMenagerJson getDataMenager() {
+        return DATA_MENAGER;
+    }
+
     /**
      * Registra il flusso di un nuovo client.
      *

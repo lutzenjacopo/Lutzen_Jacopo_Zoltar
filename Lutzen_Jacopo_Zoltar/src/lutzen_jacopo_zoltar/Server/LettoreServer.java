@@ -16,7 +16,7 @@ public class LettoreServer implements Runnable {
     /** Socket del client assegnato a questo thread. */
     private final Socket socket;
     /** Interprete del protocollo e generatore delle risposte. */
-    private final Indovino indovino = new Indovino();
+    private final Indovino indovino = new Indovino(ServerZoltar.getDataMenager());
 
     /** Prepara il lettore per la connessione indicata. */
     public LettoreServer(Socket socket) {

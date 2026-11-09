@@ -12,7 +12,14 @@ import lutzen_jacopo_gestione_zoltar.ProtocolloZoltar;
 public class Indovino {
 
     /** Strategia di risposta attiva per questa specifica connessione. */
-    private Personalita personalita = new PersonalitaZoltar();
+    private final DataMenagerJson dataMenager;
+    private Personalita personalita;
+
+    /** @param dataMenager gestore condiviso delle risposte JSON */
+    public Indovino(DataMenagerJson dataMenager) {
+        this.dataMenager = dataMenager;
+        this.personalita = new PersonalitaZoltar(dataMenager);
+    }
 
     /**
      * Interpreta un comando del protocollo.
@@ -28,11 +35,11 @@ public class Indovino {
 
             // Crea l'oggetto corrispondente alla personalita richiesta.
             if (nome.equals("Tarot")) {
-                personalita = new PersonalitaTarot();
+                personalita = new PersonalitaTarot(dataMenager);
             } else if (nome.equals("Luck")) {
-                personalita = new PersonalitaLuck();
+                personalita = new PersonalitaLuck(dataMenager);
             } else {
-                personalita = new PersonalitaZoltar();
+                personalita = new PersonalitaZoltar(dataMenager);
             }
 
             // Conferma al client il cambio di personalita.
